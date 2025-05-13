@@ -1,0 +1,21 @@
+/* TopNav.css */
+
+.main-nav {
+    @apply bg-gray-800 py-3; /* Example background and padding */
+}
+
+.main-nav ul {
+    @apply list-none flex justify-center space-x-6 m-0 p-0; /* Center links and add spacing */
+}
+
+.main-nav li {
+    @apply; /* No specific li styling needed if using flex and link padding */
+}
+
+.main-nav a {
+    @apply text-white no-underline font-medium transition duration-300 ease-in-out; /* Link appearance and transition */
+}
+
+.main-nav a:hover {
+    @apply text-blue-400; /* Hover effect for links */
+}

@@ -1,0 +1,64 @@
+/* frontend/src/styles/VideoCard.css */
+
+@keyframes fadeIn {
+ from { opacity: 0; }
+ to { opacity: 1; }
+}
+
+.video-card {
+  @apply w-72 md:w-80 lg:w-96 border border-gray-200 rounded-lg overflow-hidden mb-5 shadow-md transition-transform duration-300 ease-in-out cursor-pointer;
+  animation: fadeIn 0.5s ease-in-out; /* Add the fade-in animation */
+}
+
+.video-card:hover {
+  @apply transform scale-105; /* Adjusted scale for subtlety */
+}
+
+.video-card img {
+  @apply w-full h-48 object-cover rounded-t-lg; /* Existing styles for image */
+}
+
+.video-content {
+  @apply p-3; /* Responsive padding */
+}
+
+.video-title {
+  @apply text-lg font-bold text-gray-800 mb-2; /* Responsive font size */
+}
+.video-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-description {
+  @apply text-sm text-gray-600 mb-3; /* Responsive font size */
+}
+.video-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines, adjust as needed */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-info {
+  @apply flex items-center text-xs text-gray-700; /* Responsive font size and spacing */
+}
+
+.video-info span {
+  @apply mr-4; /* Add spacing between metadata items */
+}
+
+/* Placeholder for icons */
+.video-info span::before {
+  content: ''; /* Add content for the icon */
+  display: inline-block;
+  width: 12px; /* Adjust as needed */
+  height: 12px; /* Adjust as needed */
+  margin-right: 4px; /* Space between icon and text */
+  /* Add background image or SVG for the icon here */
+  /* background-image: url('/path/to/icon.svg'); */
+}

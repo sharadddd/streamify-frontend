@@ -1,0 +1,97 @@
+/* frontend/src/styles/LoginPage.css */
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Page container */
+.login-page-container {
+  @apply flex justify-center items-center bg-gradient-to-br from-indigo-100 to-slate-200 min-h-screen px-4;
+  animation: fadeIn 0.6s ease-in-out both;
+}
+
+/* Form box with background and overlay */
+.login-form-box {
+  @apply relative w-full max-w-sm p-10 rounded-xl shadow-2xl bg-white bg-opacity-90 backdrop-blur-md;
+  /*background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80');*/
+  background-size: cover;
+  background-position: center;
+  animation: fadeIn 1s ease;
+  z-index: 1;
+}
+
+/* Dark overlay */
+.login-form-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Put form contents above overlay */
+.login-form-box > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Form title */
+.form-title {
+  @apply text-2xl font-bold text-center text-white mb-8;
+}
+
+/* Form group */
+.form-group {
+  @apply mb-5;
+}
+
+.form-group label {
+  @apply block text-sm font-medium text-white mb-2;
+}
+
+.form-group input {
+  @apply w-full px-4 py-2 rounded-md border border-gray-300 text-gray-800 bg-white bg-opacity-80 backdrop-blur-sm transition-all duration-300 ease-in-out;
+}
+
+.form-group input:focus {
+  @apply outline-none border-indigo-500 ring-2 ring-indigo-300;
+}
+
+/* Login button */
+.login-button {
+  @apply w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg transition duration-300 ease-in-out shadow-md;
+}
+
+.login-button:hover {
+  @apply bg-indigo-700 shadow-lg;
+}
+
+/* Error message */
+.error-message {
+  @apply mb-4 p-3 bg-red-100 border border-red-400 rounded text-red-700 text-sm;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-form-box {
+    @apply p-6;
+  }
+
+  .form-title {
+    @apply text-xl;
+  }
+
+  .login-button {
+    @apply text-base;
+  }
+}

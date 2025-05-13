@@ -1,0 +1,82 @@
+/* frontend/src/styles/VideoDetailsPage.css */
+
+.video-details-page {
+    @apply container mx-auto px-4 py-8;
+}
+
+.video-player-container {
+    @apply aspect-video w-full bg-black rounded-lg overflow-hidden shadow-xl mb-6;
+}
+
+.video-player-container video {
+    @apply w-full h-full;
+}
+
+
+.video-title {
+    @apply text-3xl font-bold mb-4 text-gray-800;
+}
+
+.video-description {
+    @apply text-gray-600 mb-6;
+}
+
+.video-actions {
+    @apply flex justify-between items-center flex-wrap gap-4 mb-8;
+}
+
+.channel-info {
+    @apply flex items-center gap-4;
+}
+
+.channel-info p {
+    @apply text-lg font-semibold text-gray-700;
+}
+
+.action-buttons {
+    @apply flex items-center gap-4;
+}
+
+.like-button {
+    @apply btn-primary; /* Apply the primary button style */
+}
+
+.add-to-playlist-button {
+     @apply btn-primary; /* Apply the primary button style */
+}
+
+
+.modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50;
+}
+
+.modal-content {
+    @apply bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full relative;
+}
+
+.modal-content h3 {
+    @apply text-xl font-bold mb-4 text-gray-800;
+}
+
+.modal-content select {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md box-border mb-4; /* Consistent form input style */
+}
+
+.modal-content button {
+    @apply btn-primary mt-2 mr-2; /* Consistent primary button style with margin */
+}
+
+
+/* Basic styling for comments and related videos sections */
+.comments-section h2,
+.related-videos-section h2 {
+    @apply text-2xl font-bold mb-4 text-gray-800;
+}
+
+.comments-section {
+    @apply mt-8 pt-8 border-t border-gray-200;
+}
+
+.related-videos-section {
+    @apply mt-8 pt-8 border-t border-gray-200;
+}

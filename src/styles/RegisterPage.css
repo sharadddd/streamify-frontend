@@ -1,0 +1,269 @@
+/* frontend/src/styles/RegisterPage.css */
+
+/* Keyframes for a subtle fade-in and slide-up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main container for the register page */
+.register-container {
+  @apply flex justify-center items-center min-h-screen bg-gray-100 p-5;
+}
+
+/* Container for the registration form box */
+.register-form-box {
+  @apply bg-white p-10 rounded-lg shadow-xl w-full max-w-sm animate-fadeIn;
+}
+
+/* Add CSS for the name-fields class */
+.name-fields {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4; /* Use grid for responsiveness, 2 columns on medium screens and above */
+}
+
+/* Style for the form title */
+.form-title {
+  @apply text-center mb-6 text-2xl font-bold text-gray-800;
+}
+
+/* Container for each form group (label and input) */
+.form-group {
+  @apply mb-5 flex flex-col;
+}
+
+/* Style for form labels */
+/* Style for form input fields and file inputs */
+.form-group input,
+
+/* Optional: Apply fade-in animation if needed */
+/* This may need to be controlled by state in the component */
+/* .form-group {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0; /* Start with opacity 0 */
+
+
+/* Staggered animation delay (you can adjust these delays in your JS) */
+/* The delays are applied inline in your RegisterPage.js component */
+
+/* Optional: Add some hover effects */
+.animated-form-group:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Style for form labels */
+.form-group label {
+ @apply block mb-2 font-semibold text-gray-700;
+}
+
+/* Style for form input fields and file inputs */
+.form-group input,
+.form-group input[type="file"] {
+ @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition ease-in-out duration-150;
+}
+
+
+/* frontend/src/styles/RegisterPage.css */
+/* Style for the submit button specifically */
+.register-button {
+  @apply btn-primary; /* Use the common primary button styles */
+  width: 100%; /* Keep width 100% if needed for layout */
+}
+
+/* Keyframes for a subtle fade-in and slide-up animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main container for the register page */
+.register-container {
+  @apply flex justify-center items-center min-h-screen bg-gray-100 p-5;
+}
+
+/* Container for the registration form box */
+.register-form-box {
+  @apply bg-white p-10 rounded-lg shadow-xl w-full max-w-sm animate-fadeIn;
+}
+
+/* Add CSS for the name-fields class */
+.name-fields {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4; /* Use grid for responsiveness, 2 columns on medium screens and above */
+}
+
+/* Style for the form title */
+.form-title {
+  @apply text-center mb-6 text-2xl font-bold text-gray-800;
+}
+
+/* Container for each form group (label and input) */
+.form-group {
+  @apply mb-5 flex flex-col;
+}
+
+/* Style for form labels */
+.form-group label {
+  @apply block mb-2 font-semibold text-gray-700;
+}
+
+
+/* Style for form input fields and file inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition ease-in-out duration-150;
+}
+
+.form-group input[type="file"] {
+  @apply w-full text-gray-700
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-full file:border-0
+  file:text-sm file:font-semibold
+  file:bg-blue-50 file:text-blue-700
+  hover:file:bg-blue-100;
+}
+
+
+/* Terms and conditions styling */
+.terms-checkbox {
+  @apply flex items-center mb-5;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  @apply mr-2; /* Ensure there is some margin to the right of the checkbox */
+}
+
+.terms-checkbox label {
+  @apply text-gray-700; /* Adjust label color if needed */
+}
+
+.terms-link {
+  @apply text-blue-700 hover:underline; /* Changed text-blue-600 to text-blue-700 and added hover:underline */
+}
+
+
+/* Register button styling */
+.register-button {
+  @apply w-full btn-primary;
+}
+
+/* Error and success message styling */
+.error-message {
+  @apply mb-4 p-3 bg-red-100 border border-red-400 rounded text-red-700;
+}
+
+.success-message {
+  @apply mb-4 p-3 bg-green-100 border border-green-400 rounded text-green-700;
+}
+
+/* Optional: Stagger animation delays */
+
+.animated-form-group:nth-child(1) { animation-delay: 0.1s; }
+.animated-form-group:nth-child(2) { animation-delay: 0.2s; }
+.animated-form-group:nth-child(3) { animation-delay: 0.3s; }
+.animated-form-group:nth-child(4) { animation-delay: 0.4s; }
+.animated-form-group:nth-child(5) { animation-delay: 0.5s; }
+
+
+/* Optional: Add hover effects to animated elements */
+
+.animated-form-group:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+/* Style for the heading */
+h2 {
+  text-align: center; /* Center the heading */
+  margin-bottom: 30px; /* Add space below the heading */
+}
+/* Style for the form container itself */
+.register-form {
+  /* Add some basic styling */
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  /* Hide elements that are not yet animated */
+  overflow: hidden; 
+  display: flex; /* Use Flexbox for the form container */
+  flex-direction: column; /* Stack form groups vertically */
+}
+
+/* Apply animation to animated form groups */
+.animated-form-group {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0; /* Start with opacity 0 */
+  display: flex; /* Use Flexbox for form groups */
+  flex-direction: column; /* Stack label and input vertically */
+}
+
+/* Apply animation to input fields with fade-in class */
+.input-field.fade-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0; /* Start with opacity 0 */
+}
+
+/* Staggered animation delay (you can adjust these delays in your JS) */
+/* The delays are applied inline in your RegisterPage.js component */
+
+/* Optional: Add some hover effects */
+.animated-form-group:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+/* Add styles for labels */
+.animated-form-group label {
+  font-weight: bold;
+  display: block; /* Ensure label takes full width */
+  margin-bottom: 8px; /* Space below label */
+  color: #555; /* Dark grey color for labels */
+}
+
+/* Add styles for inputs */
+.animated-form-group input[type="text"],
+.animated-form-group input[type="password"],
+.animated-form-group input[type="file"],
+.animated-form-group input[type="email"] { /* Added email input */
+  margin-bottom: 8px; /* Add some space below labels */
+  line-height: 1.5; /* Adjust line height */
+}
+.register-button {
+  /* Remove or modify @apply btn-primary as needed, or add custom styles to override */
+  /* @apply w-full btn-primary; */
+
+  width: 100%;
+  padding: 12px 20px; /* Increased padding for better spacing */
+  border: none;
+  border-radius: 25px; /* More rounded corners */
+  background: linear-gradient to (right, #007bff, #0056b3); /* Subtle gradient */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle box shadow */
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.register-button:hover {
+  background: linear-gradient(to right, #0056b3, #003f7f); /* Darker gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+}
+

@@ -1,0 +1,58 @@
+/* frontend/src/styles/UserProfilePage.css */
+
+.user-profile-page {
+ @apply p-6 max-w-4xl mx-auto;
+}
+
+.user-profile-container {
+ @apply p-6 text-white;
+}
+
+.user-info-container {
+ @apply mb-8 bg-gray-800 rounded-lg overflow-hidden shadow-lg;
+}
+
+.avatar-image {
+ @apply w-20 h-20 rounded-full border-2 border-white object-cover;
+}
+
+.user-text-info {
+ @apply flex-1;
+}
+
+.username {
+ @apply text-xl font-semibold;
+}
+
+.user-handle,
+.user-email {
+ @apply text-sm text-gray-300;
+}
+
+.file-input {
+ @apply w-full p-2 rounded bg-gray-700 text-white; /* Consistent with form input styles */
+}
+
+.update-button {
+ @apply btn-primary; /* Use the consistent primary button style */
+}
+
+.profile-actions button:hover {
+  background-color: #0056b3;
+}
+
+.profile-videos {
+ @apply mt-8;
+}
+
+.video-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.video-item {
+ @apply border border-gray-200 rounded-lg overflow-hidden bg-white shadow;
+}

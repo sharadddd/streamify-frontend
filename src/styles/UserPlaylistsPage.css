@@ -1,0 +1,29 @@
+/* frontend/src/styles/UserPlaylistsPage.css */
+
+.user-playlists-page {
+    @apply p-6 mx-auto max-w-7xl;
+}
+
+.page-title {
+    @apply text-3xl font-bold mb-6 text-white;
+}
+
+/* Styling for the Create New Playlist button (assuming it has a class) */
+/* If the button is using the btn-primary class directly in JSX, you might not need a specific rule here unless you want to add additional margin */
+/* Example if you have a class like .create-playlist-btn */
+.create-playlist-btn {
+    @apply btn-primary mb-4;
+}
+
+
+.playlist-list {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.playlist-item {
+    @apply bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-xl transition duration-300 ease-in-out;
+}
+
+.playlist-link {
+    @apply text-white hover:text-blue-400 no-underline;
+}

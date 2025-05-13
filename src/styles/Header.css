@@ -1,0 +1,79 @@
+/* Header.css - modern design */
+
+.header {
+  @apply bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600
+         px-6 py-4
+         flex justify-between items-center
+         sticky top-0 z-50
+         transition duration-300 ease-in-out
+         shadow-md;
+}
+
+.header.scrolled {
+  @apply bg-white/95 backdrop-blur-sm
+         shadow-lg;
+}
+
+.header-logo h2 {
+  @apply text-2xl font-bold text-white
+         m-0
+         transition duration-300 ease-in-out;
+}
+
+.header.scrolled .header-logo h2 {
+  @apply text-indigo-700;
+}
+
+.header-nav-list {
+  @apply list-none flex gap-6
+         m-0 p-0
+         items-center;
+}
+
+.header-nav-item {
+  @apply font-medium text-base;
+}
+
+.header-nav-link {
+  @apply text-white no-underline
+         transition duration-300 ease-in-out transform;
+}
+
+.header-nav-link:hover {
+  @apply text-indigo-200 -translate-y-px;
+}
+
+.header.scrolled .header-nav-link {
+  @apply text-gray-700;
+}
+
+.header.scrolled .header-nav-link:hover {
+  @apply text-gray-900;
+}
+
+.header-logout-button {
+  @apply px-3 py-1.5 border-none rounded-md
+         bg-red-600 text-white font-medium
+         cursor-pointer
+         transition duration-300 ease-in-out transform;
+}
+
+.header-logout-button:hover {
+  @apply bg-red-700 scale-105;
+}
+
+@media (max-width: 768px) {
+  .header {
+    @apply flex-col items-start
+           px-4 py-3;
+  }
+
+  .header-nav-list {
+    @apply flex-col gap-3
+           mt-4 items-start;
+  }
+
+  .header-logo h2 {
+    @apply text-xl;
+  }
+}

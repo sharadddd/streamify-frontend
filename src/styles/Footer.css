@@ -1,0 +1,11 @@
+/* frontend/src/styles/Footer.css */
+
+/* frontend/src/styles/Footer.css */
+
+.footer {
+ @apply bg-gray-800 text-gray-300 py-6 mt-8 text-center;
+}
+
+.footer p {
+ @apply text-sm;
+}

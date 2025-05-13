@@ -1,0 +1,42 @@
+/* frontend/src/styles/SearchResultsPage.css */
+
+.search-results-container {
+    padding: 20px;
+}
+
+.search-query-heading {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.loading-message,
+.error-message,
+.no-results-message {
+    font-style: italic;
+    color: #555;
+}
+
+.error-message {
+    color: red;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.result-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+/* Add styles for specific result types if needed (e.g., video thumbnail, user avatar) */

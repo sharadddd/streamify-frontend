@@ -1,0 +1,33 @@
+/* frontend/src/styles/ChannelSubscribeButton.css */
+
+.subscribe-button {
+  @apply py-2 px-4 rounded font-semibold transition-colors duration-300 ease-in-out;
+}
+
+.subscribe-button.subscribed {
+  @apply bg-gray-200 text-gray-800 border border-gray-300;
+}
+
+.subscribe-button.subscribed:hover:not(:disabled) {
+  @apply bg-gray-300 border-gray-400;
+}
+
+.subscribe-button.not-subscribed {
+  @apply bg-red-600 text-white border border-red-600;
+}
+
+.subscribe-button.not-subscribed:hover:not(:disabled) {
+  @apply bg-red-700 border-red-700;
+}
+
+.subscribe-button.loading {
+    @apply opacity-70 cursor-not-allowed;
+}
+
+.subscribe-button:disabled {
+  @apply opacity-70 cursor-not-allowed;
+}
+
+.subscribe-button:hover:not(:disabled) {
+  @apply opacity-90;
+}

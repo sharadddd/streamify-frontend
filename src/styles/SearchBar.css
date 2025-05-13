@@ -1,0 +1,26 @@
+/* frontend/src/styles/SearchBar.css */
+
+.search-bar-container {
+  @apply flex items-center;
+}
+
+.search-bar-input {
+  @apply p-2 border border-gray-300 rounded-md transition duration-300 ease-in-out;
+}
+
+.search-bar-input:focus {
+  @apply border-blue-500 shadow-outline; /* shadow-outline provides a common focus shadow */
+}
+
+
+.search-bar-button {
+  @apply py-2 px-4 bg-blue-500 text-white border-none rounded-md cursor-pointer transition duration-300 ease-in-out;
+}
+
+.search-bar-button:hover {
+  @apply bg-blue-600;
+}
+
+.search-bar-button:active {
+  @apply scale-95; /* Use scale utility for active state transform */
+}

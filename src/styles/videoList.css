@@ -1,0 +1,56 @@
+/* Basic styles for VideoList component */
+.video-list-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.video-list-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.video-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.video-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures image corners are rounded */
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.video-item:hover {
+    transform: translateY(-5px); /* Simple hover effect */
+}
+
+.video-item a {
+    text-decoration: none; /* Remove underline from link */
+    color: inherit; /* Inherit text color */
+    display: block; /* Make the whole item clickable */
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 120px; /* Fixed height for thumbnails */
+    object-fit: cover; /* Crop image to cover the area */
+    display: block;
+}
+
+.video-item h3 {
+    font-size: 1.1em;
+    margin: 10px;
+    white-space: nowrap; /* Prevent title from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for overflowed titles */
+}

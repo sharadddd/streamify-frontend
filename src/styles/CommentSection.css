@@ -1,0 +1,63 @@
+/* CommentSection.css */
+
+.comment-section {
+    @apply mt-8 p-4 bg-gray-900 rounded-lg shadow-lg;
+}
+
+.comment-section h3 {
+    @apply text-xl font-bold mb-4 text-white;
+}
+
+.comment-form {
+    @apply mb-6;
+}
+
+.comment-textarea {
+    @apply w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y;
+    /* Ensure consistency with form styles */
+    min-height: 80px;
+}
+
+.add-comment-button {
+    @apply btn-primary mt-2; /* Use consistent primary button styles */
+}
+
+.comments-list {
+    @apply mt-6;
+}
+
+.comment-items {
+    @apply list-none p-0 m-0 space-y-4;
+}
+
+.comment-item {
+    @apply bg-gray-800 rounded-lg p-4 shadow-md;
+}
+
+.comment-author {
+    @apply flex items-center mb-2;
+}
+
+.author-name {
+    @apply font-semibold text-blue-400 text-sm;
+}
+
+.comment-content {
+    @apply text-gray-300 text-sm mb-2;
+}
+
+.comment-actions {
+    @apply flex items-center space-x-3 text-xs text-gray-400;
+}
+
+.comment-actions button {
+    @apply text-gray-400 hover:text-white transition duration-200;
+}
+
+.comment-actions button:hover {
+    @apply underline;
+}
+
+.comment-actions .like-count {
+    @apply font-semibold;
+}
