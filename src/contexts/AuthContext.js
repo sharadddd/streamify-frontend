@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/apiService';
 import { loginUser, logoutUser } from '../services/apiService'; // Assuming apiService.js is in ../services
 
 const AuthContext = createContext(null);
@@ -75,7 +76,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('No refresh token available');
       }
       // Assuming you have a refresh token API call in apiService
-      const response = await apiService.refreshAccessToken({ refreshToken });
+      const response = await api.refreshAccessToken({ refreshToken });
       const { accessToken } = response.data.data; // Adjust based on your API response
 
       setToken(accessToken);

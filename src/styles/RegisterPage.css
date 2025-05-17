@@ -1,11 +1,236 @@
 /* frontend/src/styles/RegisterPage.css */
 
+/* Modern Register Page Styles */
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 1rem;
+}
+
+.register-form-container {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  transition: transform 0.3s ease;
+}
+
+.register-form-container:hover {
+  transform: translateY(-5px);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.register-header h1 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.register-header p {
+  color: #6b7280;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.error-message {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message i {
+  font-size: 1rem;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.875rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #6b7280;
+}
+
+.form-footer a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.strength-meter {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  margin-top: 0.25rem;
+  overflow: hidden;
+}
+
+.strength-meter div {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.strength-weak {
+  background: #ef4444;
+  width: 33.33%;
+}
+
+.strength-medium {
+  background: #f59e0b;
+  width: 66.66%;
+}
+
+.strength-strong {
+  background: #10b981;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .register-form-container {
+    padding: 1.5rem;
+  }
+
+  .register-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .register-container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  .register-form-box {
+    background: #1e293b;
+  }
+
+  .form-title {
+    color: #f8fafc;
+  }
+
+  .form-group label {
+    color: #cbd5e1;
+  }
+
+  .form-group input {
+    background: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+  }
+
+  .form-group input:focus {
+    border-color: #3b82f6;
+  }
+
+  .form-group input[type="file"] {
+    background: #334155;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+  }
+
+  .register-form-box {
+    padding: 1.5rem;
+  }
+
+  .form-title {
+    font-size: 1.75rem;
+  }
+}
+
 /* Keyframes for a subtle fade-in and slide-up animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -24,7 +249,8 @@
 
 /* Add CSS for the name-fields class */
 .name-fields {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4; /* Use grid for responsiveness, 2 columns on medium screens and above */
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  /* Use grid for responsiveness, 2 columns on medium screens and above */
 }
 
 /* Style for the form title */
@@ -59,21 +285,23 @@
 
 /* Style for form labels */
 .form-group label {
- @apply block mb-2 font-semibold text-gray-700;
+  @apply block mb-2 font-semibold text-gray-700;
 }
 
 /* Style for form input fields and file inputs */
 .form-group input,
 .form-group input[type="file"] {
- @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition ease-in-out duration-150;
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-blue-500 transition ease-in-out duration-150;
 }
 
 
 /* frontend/src/styles/RegisterPage.css */
 /* Style for the submit button specifically */
 .register-button {
-  @apply btn-primary; /* Use the common primary button styles */
-  width: 100%; /* Keep width 100% if needed for layout */
+  @apply btn-primary;
+  /* Use the common primary button styles */
+  width: 100%;
+  /* Keep width 100% if needed for layout */
 }
 
 /* Keyframes for a subtle fade-in and slide-up animation */
@@ -82,6 +310,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -100,7 +329,8 @@
 
 /* Add CSS for the name-fields class */
 .name-fields {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4; /* Use grid for responsiveness, 2 columns on medium screens and above */
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  /* Use grid for responsiveness, 2 columns on medium screens and above */
 }
 
 /* Style for the form title */
@@ -127,12 +357,7 @@
 }
 
 .form-group input[type="file"] {
-  @apply w-full text-gray-700
-  file:mr-4 file:py-2 file:px-4
-  file:rounded-full file:border-0
-  file:text-sm file:font-semibold
-  file:bg-blue-50 file:text-blue-700
-  hover:file:bg-blue-100;
+  @apply w-full text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100;
 }
 
 
@@ -142,15 +367,18 @@
 }
 
 .terms-checkbox input[type="checkbox"] {
-  @apply mr-2; /* Ensure there is some margin to the right of the checkbox */
+  @apply mr-2;
+  /* Ensure there is some margin to the right of the checkbox */
 }
 
 .terms-checkbox label {
-  @apply text-gray-700; /* Adjust label color if needed */
+  @apply text-gray-700;
+  /* Adjust label color if needed */
 }
 
 .terms-link {
-  @apply text-blue-700 hover:underline; /* Changed text-blue-600 to text-blue-700 and added hover:underline */
+  @apply text-blue-700 hover:underline;
+  /* Changed text-blue-600 to text-blue-700 and added hover:underline */
 }
 
 
@@ -170,11 +398,25 @@
 
 /* Optional: Stagger animation delays */
 
-.animated-form-group:nth-child(1) { animation-delay: 0.1s; }
-.animated-form-group:nth-child(2) { animation-delay: 0.2s; }
-.animated-form-group:nth-child(3) { animation-delay: 0.3s; }
-.animated-form-group:nth-child(4) { animation-delay: 0.4s; }
-.animated-form-group:nth-child(5) { animation-delay: 0.5s; }
+.animated-form-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.animated-form-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.animated-form-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.animated-form-group:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.animated-form-group:nth-child(5) {
+  animation-delay: 0.5s;
+}
 
 
 /* Optional: Add hover effects to animated elements */
@@ -187,9 +429,12 @@
 
 /* Style for the heading */
 h2 {
-  text-align: center; /* Center the heading */
-  margin-bottom: 30px; /* Add space below the heading */
+  text-align: center;
+  /* Center the heading */
+  margin-bottom: 30px;
+  /* Add space below the heading */
 }
+
 /* Style for the form container itself */
 .register-form {
   /* Add some basic styling */
@@ -200,23 +445,29 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   /* Hide elements that are not yet animated */
-  overflow: hidden; 
-  display: flex; /* Use Flexbox for the form container */
-  flex-direction: column; /* Stack form groups vertically */
+  overflow: hidden;
+  display: flex;
+  /* Use Flexbox for the form container */
+  flex-direction: column;
+  /* Stack form groups vertically */
 }
 
 /* Apply animation to animated form groups */
 .animated-form-group {
   animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0; /* Start with opacity 0 */
-  display: flex; /* Use Flexbox for form groups */
-  flex-direction: column; /* Stack label and input vertically */
+  opacity: 0;
+  /* Start with opacity 0 */
+  display: flex;
+  /* Use Flexbox for form groups */
+  flex-direction: column;
+  /* Stack label and input vertically */
 }
 
 /* Apply animation to input fields with fade-in class */
 .input-field.fade-in {
   animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0; /* Start with opacity 0 */
+  opacity: 0;
+  /* Start with opacity 0 */
 }
 
 /* Staggered animation delay (you can adjust these delays in your JS) */
@@ -232,38 +483,117 @@ h2 {
 /* Add styles for labels */
 .animated-form-group label {
   font-weight: bold;
-  display: block; /* Ensure label takes full width */
-  margin-bottom: 8px; /* Space below label */
-  color: #555; /* Dark grey color for labels */
+  display: block;
+  /* Ensure label takes full width */
+  margin-bottom: 8px;
+  /* Space below label */
+  color: #555;
+  /* Dark grey color for labels */
 }
 
 /* Add styles for inputs */
 .animated-form-group input[type="text"],
 .animated-form-group input[type="password"],
 .animated-form-group input[type="file"],
-.animated-form-group input[type="email"] { /* Added email input */
-  margin-bottom: 8px; /* Add some space below labels */
-  line-height: 1.5; /* Adjust line height */
+.animated-form-group input[type="email"] {
+  /* Added email input */
+  margin-bottom: 8px;
+  /* Add some space below labels */
+  line-height: 1.5;
+  /* Adjust line height */
 }
+
 .register-button {
   /* Remove or modify @apply btn-primary as needed, or add custom styles to override */
   /* @apply w-full btn-primary; */
 
   width: 100%;
-  padding: 12px 20px; /* Increased padding for better spacing */
+  padding: 12px 20px;
+  /* Increased padding for better spacing */
   border: none;
-  border-radius: 25px; /* More rounded corners */
-  background: linear-gradient to (right, #007bff, #0056b3); /* Subtle gradient */
+  border-radius: 25px;
+  /* More rounded corners */
+  background: linear-gradient to (right, #007bff, #0056b3);
+  /* Subtle gradient */
   color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle box shadow */
-  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Subtle box shadow */
+  transition: all 0.3s ease;
+  /* Smooth transitions for hover effects */
 }
 
 .register-button:hover {
-  background: linear-gradient(to right, #0056b3, #003f7f); /* Darker gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+  background: linear-gradient(to right, #0056b3, #003f7f);
+  /* Darker gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  /* Larger shadow on hover */
 }
 
+/* Required field indicator */
+.form-group label::after {
+  content: "*";
+  color: #e53e3e;
+  margin-left: 4px;
+}
+
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #4a90e2;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+.avatar-placeholder i {
+  font-size: 3rem;
+  color: #757575;
+}
+
+.avatar-input {
+  display: none;
+}
+
+.avatar-label {
+  background-color: #4a90e2;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.avatar-label:hover {
+  background-color: #357abd;
+}

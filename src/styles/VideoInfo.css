@@ -1,0 +1,220 @@
+.video-info {
+    padding: 1rem;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.video-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.video-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.video-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.video-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.like-button,
+.share-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.like-button:hover,
+.share-button:hover {
+    background: var(--bg-tertiary);
+}
+
+.like-button.active {
+    background: var(--primary-500);
+    color: white;
+}
+
+.like-button.active:hover {
+    background: var(--primary-600);
+}
+
+.channel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.channel-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.channel-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.channel-name {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.subscriber-count {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.subscribe-button {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: 20px;
+    background: var(--primary-500);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.subscribe-button:hover {
+    background: var(--primary-600);
+}
+
+.subscribe-button.subscribed {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.subscribe-button.subscribed:hover {
+    background: var(--error-500);
+    color: white;
+}
+
+.video-description {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.description-content {
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    white-space: pre-wrap;
+}
+
+.description-content.expanded {
+    max-height: none;
+}
+
+.show-more-button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.show-more-button:hover {
+    color: var(--text-primary);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+
+    .like-button,
+    .share-button {
+        background: var(--bg-secondary-dark);
+    }
+
+    .like-button:hover,
+    .share-button:hover {
+        background: var(--bg-tertiary-dark);
+    }
+
+    .subscribe-button.subscribed {
+        background: var(--bg-secondary-dark);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-info {
+        padding: 0.75rem;
+    }
+
+    .video-title {
+        font-size: 1.25rem;
+    }
+
+    .video-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .video-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .channel-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .subscribe-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-info {
+        padding: 0.5rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}

@@ -1,64 +1,408 @@
 /* frontend/src/styles/VideoCard.css */
 
 @keyframes fadeIn {
- from { opacity: 0; }
- to { opacity: 1; }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Base Styles */
+:root {
+  --card-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-scale: 1.02;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --card-border-radius: 12px;
+  --card-overlay-bg: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .video-card {
-  @apply w-72 md:w-80 lg:w-96 border border-gray-200 rounded-lg overflow-hidden mb-5 shadow-md transition-transform duration-300 ease-in-out cursor-pointer;
-  animation: fadeIn 0.5s ease-in-out; /* Add the fade-in animation */
+  position: relative;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
 }
 
 .video-card:hover {
-  @apply transform scale-105; /* Adjusted scale for subtlety */
+  transform: translateY(-4px);
 }
 
-.video-card img {
-  @apply w-full h-48 object-cover rounded-t-lg; /* Existing styles for image */
+.thumbnail-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  /* 16:9 Aspect Ratio */
+  background: #f0f2f5;
+  overflow: hidden;
+}
+
+.thumbnail,
+.preview-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnail.hidden {
+  opacity: 0;
+}
+
+.preview-video {
+  opacity: 0;
+}
+
+.preview-video.visible {
+  opacity: 1;
+}
+
+.duration-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.video-badges {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.video-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.video-badge.hd {
+  background: #4a90e2;
+  color: white;
+}
+
+.video-badge.live {
+  background: #ef4444;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.volume-control {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+.video-card:hover .volume-control {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.volume-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  transition: opacity 0.2s ease;
+}
+
+.volume-button:hover {
+  opacity: 0.8;
+}
+
+.volume-slider {
+  width: 80px;
+}
+
+.volume-slider input[type="range"] {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.volume-slider input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.watch-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.watch-progress-bar {
+  height: 100%;
+  background: #ff0000;
+  transition: width 0.3s ease;
 }
 
 .video-content {
-  @apply p-3; /* Responsive padding */
+  padding: 12px;
+  display: flex;
+  gap: 12px;
 }
 
-.video-title {
-  @apply text-lg font-bold text-gray-800 mb-2; /* Responsive font size */
-}
-.video-title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Limit to 2 lines */
-  -webkit-box-orient: vertical;
+.channel-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   overflow: hidden;
-  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 
-.video-description {
-  @apply text-sm text-gray-600 mb-3; /* Responsive font size */
-}
-.video-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* Limit to 3 lines, adjust as needed */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.channel-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .video-info {
-  @apply flex items-center text-xs text-gray-700; /* Responsive font size and spacing */
+  flex: 1;
+  min-width: 0;
 }
 
-.video-info span {
-  @apply mr-4; /* Add spacing between metadata items */
+.video-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Placeholder for icons */
-.video-info span::before {
-  content: ''; /* Add content for the icon */
-  display: inline-block;
-  width: 12px; /* Adjust as needed */
-  height: 12px; /* Adjust as needed */
-  margin-right: 4px; /* Space between icon and text */
-  /* Add background image or SVG for the icon here */
-  /* background-image: url('/path/to/icon.svg'); */
+.channel-name {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 2px;
+  display: block;
+  text-decoration: none;
+}
+
+.channel-name:hover {
+  color: #1a1a1a;
+}
+
+.video-meta {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-separator {
+  margin: 0 4px;
+}
+
+/* Loading skeleton styles */
+.video-card.loading {
+  pointer-events: none;
+}
+
+.thumbnail-skeleton {
+  width: 100%;
+  padding-top: 56.25%;
+  background: linear-gradient(90deg, #f0f2f5 0%, #e0e0e0 50%, #f0f2f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.content-skeleton {
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.avatar-skeleton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f2f5 0%, #e0e0e0 50%, #f0f2f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.info-skeleton {
+  flex: 1;
+}
+
+.title-skeleton {
+  height: 16px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #f0f2f5 0%, #e0e0e0 50%, #f0f2f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.channel-skeleton {
+  height: 14px;
+  width: 60%;
+  margin-bottom: 4px;
+  background: linear-gradient(90deg, #f0f2f5 0%, #e0e0e0 50%, #f0f2f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.meta-skeleton {
+  height: 14px;
+  width: 40%;
+  background: linear-gradient(90deg, #f0f2f5 0%, #e0e0e0 50%, #f0f2f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .video-card {
+    background: #242424;
+  }
+
+  .thumbnail-wrapper {
+    background: #1a1a1a;
+  }
+
+  .video-title {
+    color: #fff;
+  }
+
+  .channel-name {
+    color: #999;
+  }
+
+  .channel-name:hover {
+    color: #fff;
+  }
+
+  .video-meta {
+    color: #999;
+  }
+
+  .thumbnail-skeleton,
+  .avatar-skeleton,
+  .title-skeleton,
+  .channel-skeleton,
+  .meta-skeleton {
+    background: linear-gradient(90deg, #2a2a2a 0%, #333 50%, #2a2a2a 100%);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .video-card:hover {
+    transform: none;
+  }
+
+  .volume-control {
+    display: none;
+  }
+
+  .video-content {
+    padding: 8px;
+  }
+
+  .channel-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .video-title {
+    font-size: 13px;
+  }
+
+  .channel-name,
+  .video-meta {
+    font-size: 12px;
+  }
 }

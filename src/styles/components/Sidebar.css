@@ -1,0 +1,117 @@
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--bg-secondary);
+    padding: 80px 0 20px;
+    overflow-y: auto;
+    z-index: 100;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-section {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-section:last-child {
+    border-bottom: none;
+}
+
+.sidebar-header {
+    padding: 0 24px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background: var(--bg-hover);
+}
+
+.sidebar-item.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.sidebar-icon {
+    font-size: 20px;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.social-section {
+    margin-top: auto;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px;
+}
+
+.social-link {
+    color: var(--text-primary);
+    font-size: 24px;
+    transition: all 0.2s ease;
+}
+
+.social-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* Scrollbar Styles */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .sidebar {
+        background: var(--bg-secondary-dark);
+        border-right-color: var(--border-color-dark);
+    }
+
+    .sidebar-section {
+        border-bottom-color: var(--border-color-dark);
+    }
+
+    .sidebar-item:hover {
+        background: var(--bg-hover-dark);
+    }
+} 

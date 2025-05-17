@@ -1,26 +1,186 @@
 /* frontend/src/styles/SearchBar.css */
 
-.search-bar-container {
-  @apply flex items-center;
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.search-bar-input {
-  @apply p-2 border border-gray-300 rounded-md transition duration-300 ease-in-out;
+.search-input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  padding-left: var(--spacing-10);
+  background: var(--bg-secondary);
+  border: 2px solid transparent;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  transition: var(--transition-all);
 }
 
-.search-bar-input:focus {
-  @apply border-blue-500 shadow-outline; /* shadow-outline provides a common focus shadow */
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-md);
 }
 
-
-.search-bar-button {
-  @apply py-2 px-4 bg-blue-500 text-white border-none rounded-md cursor-pointer transition duration-300 ease-in-out;
+.search-icon {
+  position: absolute;
+  left: var(--spacing-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  transition: var(--transition-all);
 }
 
-.search-bar-button:hover {
-  @apply bg-blue-600;
+.search-input:focus + .search-icon {
+  color: var(--primary-500);
 }
 
-.search-bar-button:active {
-  @apply scale-95; /* Use scale utility for active state transform */
+.search-results {
+  position: absolute;
+  top: calc(100% + var(--spacing-2));
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: var(--z-50);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: var(--transition-all);
+}
+
+.search-results.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition-all);
+}
+
+.search-result-item:hover {
+  background: var(--bg-secondary);
+}
+
+.search-result-thumbnail {
+  width: 100px;
+  height: 56px;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.search-result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-result-title {
+  font-weight: 500;
+  margin-bottom: var(--spacing-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result-channel {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.search-result-views {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* Loading State */
+.search-result-loading {
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.search-result-loading-item {
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.loading-thumbnail {
+  width: 100px;
+  height: 56px;
+  border-radius: var(--radius);
+  background: var(--neutral-200);
+}
+
+.loading-text {
+  flex: 1;
+}
+
+.loading-title {
+  height: 20px;
+  width: 80%;
+  background: var(--neutral-200);
+  border-radius: var(--radius);
+  margin-bottom: var(--spacing-2);
+}
+
+.loading-channel {
+  height: 16px;
+  width: 40%;
+  background: var(--neutral-200);
+  border-radius: var(--radius);
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .search-input {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .search-input:focus {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .loading-thumbnail,
+  .loading-title,
+  .loading-channel {
+    background: var(--neutral-800);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-container {
+    max-width: none;
+  }
+  
+  .search-results {
+    position: fixed;
+    top: var(--spacing-16);
+    left: var(--spacing-2);
+    right: var(--spacing-2);
+  }
+  
+  .search-result-thumbnail {
+    width: 80px;
+    height: 45px;
+  }
 }

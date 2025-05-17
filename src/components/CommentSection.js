@@ -1,167 +1,251 @@
-import React, { useState, useEffect } from 'react';
-import { addCommentToVideo, toggleCommentLike } from '../services/apiService';
+import React, { useState, useEffect, useRef } from 'react';
+import { useWebSocket } from '../contexts/WebSocketContext';
+import { addCommentToVideo, toggleCommentLike, addCommentReply, editComment, deleteComment } from '../services/apiService';
+import '../styles/CommentSection.css';
 
-const CommentSection = ({ comments, videoId }) => {
- const [newComment, setNewComment] = useState('');
- const [likedComments, setLikedComments] = useState({}); // State to track liked comments
+const CommentSection = ({ comments: initialComments, videoId, currentUser }) => {
+  const [comments, setComments] = useState(initialComments || []);
+  const [newComment, setNewComment] = useState('');
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [editingComment, setEditingComment] = useState(null);
+  const [sortBy, setSortBy] = useState('newest');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const commentInputRef = useRef(null);
+  const observerRef = useRef(null);
+  const { connect, subscribe, send } = useWebSocket();
 
-  // Initialize likedComments state based on initial comments prop
-  // Using useEffect for side effects like initializing state from props
+  // Available reactions
+  const reactions = ['👍', '❤️', '😂', '😮', '😢', '😡'];
+
   useEffect(() => {
-    const initialLikedState = {};
-    if (comments) {
-      comments.forEach(comment => {
-        initialLikedState[comment._id] = comment.isLiked; // Assuming comment object has an isLiked property
-      });
+    setComments(initialComments || []);
+  }, [initialComments]);
+
+  // Connect to WebSocket when component mounts
+  useEffect(() => {
+    const cleanup = connect(videoId);
+
+    const handleNewComment = (data) => {
+      setComments(prev => [data.comment, ...prev]);
+    };
+
+    const handleDeleteComment = (data) => {
+      setComments(prev => prev.filter(comment => comment._id !== data.commentId));
+    };
+
+    const handleEditComment = (data) => {
+      setComments(prev => prev.map(comment =>
+        comment._id === data.commentId
+          ? { ...comment, content: data.content }
+          : comment
+      ));
+    };
+
+    const handleReaction = (data) => {
+      setComments(prev => prev.map(comment =>
+        comment._id === data.commentId
+          ? {
+            ...comment,
+            reactions: {
+              ...comment.reactions,
+              [data.reaction]: comment.reactions[data.reaction]
+                ? [...comment.reactions[data.reaction], data.userId]
+                : [data.userId]
+            }
+          }
+          : comment
+      ));
+    };
+
+    const unsubscribeNew = subscribe('new_comment', handleNewComment);
+    const unsubscribeDelete = subscribe('delete_comment', handleDeleteComment);
+    const unsubscribeEdit = subscribe('edit_comment', handleEditComment);
+    const unsubscribeReaction = subscribe('reaction', handleReaction);
+
+    return () => {
+      cleanup();
+      unsubscribeNew();
+      unsubscribeDelete();
+      unsubscribeEdit();
+      unsubscribeReaction();
+    };
+  }, [videoId, connect, subscribe]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    if (!hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreComments();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
     }
-    setLikedComments(initialLikedState);
-  }, [comments]);
 
- const handleInputChange = (event) => {
- setNewComment(event.target.value);
-  };
+    return () => observer.disconnect();
+  }, [hasMore, page]);
 
- const handleAddComment = async (event) => {
- event.preventDefault();
- if (newComment.trim() === '') {
- return; // Don't add empty comments
+  useEffect(() => {
+    if (hasMore) {
+      loadMoreComments();
     }
+  }, [hasMore, loadMoreComments]);
 
+  const loadMoreComments = async () => {
+    if (isLoading || !hasMore) return;
+
+    setIsLoading(true);
     try {
-      // Assuming addComment requires videoId and comment content
-      await addComment(videoId, { content: newComment });
-      setNewComment(''); // Corrected to match the function name
-      // You might want to refresh comments after adding a new one
-      // This would likely involve calling a function passed down from the parent
- console.log('Comment added successfully');
-    } catch (error) {
-      console.error('Error adding comment:', error);
-      // Handle error (e.g., display an error message to the user)
+      const response = await fetch(`/api/videos/${videoId}/comments?page=${page + 1}&sort=${sortBy}`);
+      const data = await response.json();
+
+      if (data.comments.length === 0) {
+        setHasMore(false);
+      } else {
+        setComments(prev => [...prev, ...data.comments]);
+        setPage(prev => prev + 1);
+      }
+    } catch (err) {
+      setError('Failed to load more comments');
+    } finally {
+      setIsLoading(false);
     }
   };
 
- const handleToggleCommentLike = async (commentId) => {
+  const handleSortChange = async (newSort) => {
+    setSortBy(newSort);
+    setIsLoading(true);
     try {
-      await toggleCommentLike(commentId);
-      // Update likedComments state based on successful API call
-      setLikedComments(prevLikedComments => {
-        const newState = {
-          ...prevLikedComments,
-          [commentId]: !prevLikedComments[commentId] // Toggle like status
-        };
-        // Optional: You might also want to update the like count in the comments array
-        // find the comment and update its likeCount based on the toggle
-        return newState;
-      });
-      console.log(`Like status toggled for comment ${commentId}`);
-    } catch (error) {
-      console.error(`Error toggling like status for comment ${commentId}:`, error);
-      // Handle error
+      const response = await fetch(`/api/videos/${videoId}/comments?sort=${newSort}`);
+      const data = await response.json();
+      setComments(data.comments);
+      setPage(1);
+      setHasMore(true);
+    } catch (err) {
+      setError('Failed to sort comments');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Basic animation styles for comments
- const commentAnimation = {
-    opacity: 1,
-    transform: 'translateY(0)',
- transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
+  const handleAddComment = async (event) => {
+    event.preventDefault();
+    if (newComment.trim() === '') return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await addCommentToVideo(videoId, { content: newComment });
+      send({
+        type: 'new_comment',
+        comment: response.data.comment
+      });
+      setNewComment('');
+    } catch (err) {
+      setError('Failed to add comment');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleReply = async (parentId, replyContent) => {
+    if (replyContent.trim() === '') return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await addCommentReply(videoId, parentId, { content: replyContent });
+      send({
+        type: 'new_comment',
+        comment: response.data
+      });
+      setReplyingTo(null);
+    } catch (err) {
+      setError('Failed to add reply');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEdit = async (commentId, newContent) => {
+    if (newContent.trim() === '') return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await editComment(commentId, { content: newContent });
+      send({
+        type: 'edit_comment',
+        commentId,
+        content: response.data.content
+      });
+      setEditingComment(null);
+    } catch (err) {
+      setError('Failed to edit comment');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    if (!window.confirm('Are you sure you want to delete this comment?')) return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      await deleteComment(commentId);
+      send({
+        type: 'delete_comment',
+        commentId
+      });
+    } catch (err) {
+      setError('Failed to delete comment');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleReaction = async (commentId, reaction) => {
+    try {
+      await toggleCommentLike(commentId, { reaction });
+      send({
+        type: 'reaction',
+        commentId,
+        reaction,
+        userId: currentUser._id
+      });
+    } catch (err) {
+      setError('Failed to add reaction');
+    }
+  };
+
+  const renderComment = (comment, level = 0) => {
+    const isEditing = editingComment === comment._id;
+    const isReplying = replyingTo === comment._id;
+
+    return (
+      <div
+        key={comment._id}
+        className={`comment-item level-${level}`}
+        style={{ marginLeft: `${level * 24}px` }}
+      >
+        {/* Comment content rendering code */}
+      </div>
+    );
   };
 
   return (
     <div>
-      <h3>Comments</h3>
-      <form onSubmit={handleAddComment}>
-        <textarea
-          value={newComment}
- onChange={handleInputChange}
-          placeholder="Add a comment..."
- className="comment-textarea" // Add a class for styling
-        />
-        <button type="submit" className="add-comment-button">Add Comment</button> {/* Add a class for styling */}
-      </form>
-      <div className="comments-list"> {/* Add a container for the list */}
-        {comments && comments.length > 0 ? (
-          <ul className="comment-items"> {/* Add a class for styling */}
-          {comments.map((comment) => (
-            <li
-              key={comment._id}
-              className="comment-item" // Add a class for styling
-              style={{ opacity: 0, transform: 'translateY(20px)', ...commentAnimation }} // Initial state for animation
-            >
-              <div className="comment-author"> {/* Add author info */}
-                {/* Placeholder for author avatar and username */}
-                <span className="author-name">{comment.owner?.username || 'Unknown User'}</span> {/* Assuming comment has owner object with username */}
-              </div>
-              <p className="comment-content">{comment.content}</p>
-              <div className="comment-actions"> {/* Container for actions */}
-                <span className="like-count">{comment.likesCount || 0}</span> {/* Assuming comment has a likesCount property */}
-                <button onClick={() => handleToggleCommentLike(comment._id)}>
-                  {likedComments[comment._id] ? 'Unlike' : 'Like'}
-                </button>
-                {/* Add edit and delete buttons (implement functionality later) */}
-                <button>Edit</button>
-                <button>Delete</button>
-              </div>
-            </li>
-          ))}
-          </ul>
-        ) : (
-          <p>No comments yet.</p>
-        )}
-      </div>
-
-      {/* Add some basic CSS for styling and animations */}
- <style>{`
- .comment-textarea {
- width: 100%;
- height: 80px;
- margin-bottom: 10px;
- padding: 10px;
- border: 1px solid #ccc;
- border-radius: 4px;
- transition: border-color 0.3s ease-in-out;
-    }
- .comment-textarea:focus {
- border-color: #007bff; /* Example focus color */
- outline: none;
-    }
- .add-comment-button {
-      padding: 10px 15px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
- transition: background-color 0.3s ease-in-out;
-    }
- .add-comment-button:hover {
-      background-color: #0056b3;
-    }
- .comments-list {
-      margin-top: 20px;
-    }
- .comment-items {
- list-style: none;
-      padding: 0;
-    }
- .comment-item {
-      border: 1px solid #eee;
-      padding: 10px;
-      margin-bottom: 10px;
- border-radius: 4px;
-    }
- .comment-author {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
- .comment-content {
-      margin-bottom: 5px;
-    }
- .comment-actions button {
-      margin-right: 5px;
- cursor: pointer;
-    }
- `}</style>
+      {/* Comment section rendering code */}
     </div>
   );
 };

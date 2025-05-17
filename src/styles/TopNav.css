@@ -1,21 +1,96 @@
 /* TopNav.css */
 
+/* Main Navigation Styles */
 .main-nav {
-    @apply bg-gray-800 py-3; /* Example background and padding */
+    background: var(--bg-secondary);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
 }
 
-.main-nav ul {
-    @apply list-none flex justify-center space-x-6 m-0 p-0; /* Center links and add spacing */
+.main-nav-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
 }
 
-.main-nav li {
-    @apply; /* No specific li styling needed if using flex and link padding */
+.main-nav-item {
+    position: relative;
 }
 
-.main-nav a {
-    @apply text-white no-underline font-medium transition duration-300 ease-in-out; /* Link appearance and transition */
+.main-nav-item a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.main-nav a:hover {
-    @apply text-blue-400; /* Hover effect for links */
+.main-nav-item a:hover {
+    color: var(--primary-500);
+    background: var(--primary-50);
+}
+
+.main-nav-item a.active {
+    color: var(--primary-600);
+    background: var(--primary-100);
+}
+
+/* Add icons to navigation items */
+.main-nav-item a::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.main-nav-item a[href="/videos"]::before {
+    content: "\\f008"; /* Video icon */
+}
+
+.main-nav-item a[href="/upload"]::before {
+    content: "\\f093"; /* Upload icon */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-nav {
+        padding: 0.75rem 1rem;
+    }
+
+    .main-nav-list {
+        gap: 1rem;
+    }
+
+    .main-nav-item a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .main-nav {
+        background: var(--bg-secondary-dark);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .main-nav-item a:hover {
+        background: var(--primary-900);
+    }
+
+    .main-nav-item a.active {
+        background: var(--primary-800);
+    }
 }

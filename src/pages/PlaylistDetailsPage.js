@@ -12,6 +12,12 @@ const PlaylistDetailsPage = forwardRef((props, ref) => {
   const [error, setError] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [updateForm, setUpdateForm] = useState({
+    title: '',
+    description: '',
+    isPrivate: false
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +26,11 @@ const PlaylistDetailsPage = forwardRef((props, ref) => {
         setLoading(true);
         const response = await getPlaylistById(playlistId);
         setPlaylist(response.data.data);
+        setUpdateForm({
+          title: response.data.data.title,
+          description: response.data.data.description,
+          isPrivate: response.data.data.isPrivate
+        });
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -44,14 +55,98 @@ const PlaylistDetailsPage = forwardRef((props, ref) => {
     }
   };
 
-  const handleUpdatePlaylist = () => {
-    setIsUpdating(true);
-    console.log('Update playlist clicked for playlistId:', playlistId);
-    // Open modal or other logic goes here
+  const handleUpdatePlaylist = async () => {
+    try {
+      setIsUpdating(true);
+      const response = await updatePlaylist(playlistId, updateForm);
+      setPlaylist(response.data.data);
+      setShowUpdateModal(false);
+      setIsUpdating(false);
+    } catch (err) {
+      setError(err);
+      console.error('Error updating playlist:', err);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setUpdateForm(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
   };
 
   const renderUpdateModal = () => {
-    return null; // Add modal implementation here
+    if (!showUpdateModal) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full"
+        >
+          <h2 className="text-2xl font-bold mb-4">Update Playlist</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            handleUpdatePlaylist();
+          }}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Title</label>
+              <input
+                type="text"
+                name="title"
+                value={updateForm.title}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Description</label>
+              <textarea
+                name="description"
+                value={updateForm.description}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                rows="3"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isPrivate"
+                  checked={updateForm.isPrivate}
+                  onChange={handleInputChange}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium">Private Playlist</span>
+              </label>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setShowUpdateModal(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                disabled={isUpdating}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
+                disabled={isUpdating}
+              >
+                {isUpdating ? 'Updating...' : 'Update'}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </div>
+    );
   };
 
   const containerVariants = {
@@ -95,7 +190,7 @@ const PlaylistDetailsPage = forwardRef((props, ref) => {
         <PlaylistDetails playlist={playlist} />
         <div className="playlist-actions">
           <motion.button
-            onClick={handleUpdatePlaylist}
+            onClick={() => setShowUpdateModal(true)}
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"

@@ -1,0 +1,266 @@
+/* Base Styles */
+:root {
+    --preview-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --preview-scale: 1.05;
+    --preview-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    --preview-border-radius: 12px;
+    --preview-overlay-bg: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.video-preview-container {
+    position: relative;
+    width: 100%;
+    border-radius: var(--preview-border-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--preview-transition);
+    background: var(--bg-primary);
+    transform-origin: center center;
+}
+
+.video-preview-container:hover {
+    transform: scale(var(--preview-scale));
+    z-index: 10;
+    box-shadow: var(--preview-shadow);
+}
+
+.video-preview-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+/* Thumbnail Styles */
+.video-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all var(--preview-transition);
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+.video-thumbnail.hidden {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.video-preview-container:hover .video-thumbnail:not(.hidden) {
+    transform: scale(1.1);
+}
+
+/* Video Preview Styles */
+.video-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: scale(1.1);
+    will-change: transform, opacity;
+}
+
+.video-preview.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Info Overlay */
+.video-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2.5rem 1rem 1rem;
+    background: var(--preview-overlay-bg);
+    color: white;
+    transform: translateY(0);
+    transition: all var(--preview-transition);
+    backdrop-filter: blur(4px);
+}
+
+.video-preview-container:not(:hover) .video-info-overlay {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.video-info-overlay h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.video-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    align-items: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress Bar */
+.preview-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    transform: scaleY(0.5);
+    transition: transform var(--preview-transition);
+}
+
+.video-preview-container:hover .preview-progress-bar {
+    transform: scaleY(1);
+}
+
+.preview-progress-bar .progress {
+    height: 100%;
+    background: var(--primary-500);
+    transition: width 0.1s linear;
+    position: relative;
+}
+
+.preview-progress-bar .progress::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-500);
+    border-radius: 50%;
+    transform: translate(0, -50%) scale(0);
+    transition: transform var(--preview-transition);
+}
+
+.video-preview-container:hover .preview-progress-bar .progress::after {
+    transform: translate(0, -50%) scale(1);
+}
+
+/* Video Badges */
+.video-badges {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 2;
+}
+
+.video-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    backdrop-filter: blur(8px);
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all var(--preview-transition);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-preview-container:hover .video-badge {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.video-badge.hd {
+    background: rgba(255, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.video-badge.live {
+    background: rgba(255, 0, 0, 0.9);
+    animation: pulse 2s infinite;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Volume Control */
+.volume-control {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 20px;
+    padding: 6px;
+    z-index: 10;
+    transition: all var(--preview-transition);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.video-preview-container:hover .volume-control {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+    .video-preview-container {
+        background: var(--bg-secondary);
+    }
+
+    .video-preview-wrapper {
+        background: var(--bg-tertiary);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .video-preview-container:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .video-info-overlay {
+        transform: translateY(0);
+        padding: 1rem 0.75rem 0.5rem;
+    }
+
+    .volume-control,
+    .video-badge {
+        display: none;
+    }
+
+    .preview-progress-bar {
+        transform: scaleY(1);
+    }
+}

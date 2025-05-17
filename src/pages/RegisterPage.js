@@ -1,11 +1,14 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/apiService';
 import '../styles/RegisterPage.css';
 
-const RegisterPage = forwardRef((props, ref) => {
+const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
+    fullName: '',
     password: '',
     avatar: null,
     coverImage: null,
@@ -17,8 +20,8 @@ const RegisterPage = forwardRef((props, ref) => {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: files ? files[0] : value,
     }));
   };
@@ -29,151 +32,140 @@ const RegisterPage = forwardRef((props, ref) => {
     setError(null);
     setSuccess(false);
 
-    const form = new FormData();
-    form.append('username', formData.username);
-    form.append('email', formData.email);
-    form.append('password', formData.password);
-    if (formData.avatar) form.append('avatar', formData.avatar);
-    if (formData.coverImage) form.append('coverImage', formData.coverImage);
-
     try {
-      await registerUser(form);
+      const formDataToSend = new FormData();
+      formDataToSend.append('username', formData.username);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('fullName', formData.fullName);
+      formDataToSend.append('password', formData.password);
+      if (formData.avatar) formDataToSend.append('avatar', formData.avatar);
+      if (formData.coverImage) formDataToSend.append('coverImage', formData.coverImage);
+
+      const response = await registerUser(formDataToSend);
       setSuccess(true);
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-        avatar: null,
-        coverImage: null,
-      });
+
+      // Store user data and token
+      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data.token);
+
+      // Show success message briefly before redirecting
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1500);
     } catch (err) {
       console.error('Registration error:', err);
-      setError(err.message || 'Registration failed.');
+      setError(err.response?.data?.message || 'Registration failed.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="register-container" ref={ref}>
-      {/* Assuming first and last name inputs are needed for registration.
-          These were not in the provided JS, adding as example based on previous conversation. */}
+    <div className="register-container">
       <div className="register-form-box">
-        <h2 className="form-title">Register Page</h2>
+        <h2 className="form-title">Create Your Account</h2>
         <form onSubmit={handleSubmit} className="register-form">
-          <div className="form-group animated-form-group" style={{ animationDelay: '0.1s' }}>
-            <label htmlFor="username">Username:</label>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               id="username"
               name="username"
-              className="input-field fade-in"
-              style={{ animationDelay: '0.1s' }}
               value={formData.username}
               onChange={handleInputChange}
+              placeholder="Choose a username"
               required
+              className="input-field"
+              style={{ backgroundColor: '#ffffff', color: '#1a202c' }}
             />
           </div>
 
-          {/* Example of wrapping first and last name in a container for layout */}
-          <div className="name-fields"> {/* New container for name fields */}
-            {/* Add form group for first name if it exists */}
-            {/*
-            <div className="form-group animated-form-group" style={{ animationDelay: '0.15s' }}>
-              <label htmlFor="firstName">First Name:</label>
+          <div className="form-group">
+            <label htmlFor="fullName">Full Name</label>
               <input
                 type="text"
-                id="firstName"
-                name="firstName"
-                className="input-field fade-in"
-                style={{ animationDelay: '0.15s' }}
-                value={formData.firstName} // Assuming formData includes firstName
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
                 onChange={handleInputChange}
+              placeholder="Enter your full name"
+              required
+              className="input-field"
+              style={{ backgroundColor: '#ffffff', color: '#1a202c' }}
               />
-            </div>
-            */}
-            {/* Add form group for last name if it exists */}
-            {/*
-            <div className="form-group animated-form-group" style={{ animationDelay: '0.25s' }}>
-              <label htmlFor="lastName">Last Name:</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                className="input-field fade-in"
-                style={{ animationDelay: '0.25s' }}
-                value={formData.lastName} // Assuming formData includes lastName
-                onChange={handleInputChange}
-              />
-            </div>
-            */}
           </div>
 
-          <div className="form-group animated-form-group" style={{ animationDelay: '0.2s' }}>
-            <label htmlFor="email">Email:</label>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
-              className="input-field fade-in"
-              style={{ animationDelay: '0.2s' }}
               value={formData.email}
               onChange={handleInputChange}
+              placeholder="Enter your email"
               required
+              className="input-field"
+              style={{ backgroundColor: '#ffffff', color: '#1a202c' }}
             />
           </div>
 
-          <div className="form-group animated-form-group" style={{ animationDelay: '0.3s' }}>
-            <label htmlFor="password">Password:</label>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               name="password"
-              className="input-field fade-in"
-              style={{ animationDelay: '0.3s' }}
               value={formData.password}
               onChange={handleInputChange}
+              placeholder="Create a password"
               required
+              className="input-field"
+              style={{ backgroundColor: '#ffffff', color: '#1a202c' }}
             />
           </div>
 
-          <div className="form-group animated-form-group" style={{ animationDelay: '0.4s' }}>
-            <label htmlFor="avatar">Avatar:</label>
+          <div className="form-group">
+            <label htmlFor="avatar">Profile Picture (Required)</label>
             <input
               type="file"
               id="avatar"
               name="avatar"
-              className="input-field fade-in"
-              style={{ animationDelay: '0.4s' }}
-              accept="image/*"
               onChange={handleInputChange}
+              accept="image/*"
+              required
+              className="file-input"
+              style={{ color: '#2d3748' }}
             />
           </div>
 
-          <div className="form-group animated-form-group" style={{ animationDelay: '0.5s' }}>
-            <label htmlFor="coverImage">Cover Image:</label>
+          <div className="form-group">
+            <label htmlFor="coverImage">Cover Image (Optional)</label>
             <input
               type="file"
               id="coverImage"
               name="coverImage"
-              className="input-field fade-in"
-              style={{ animationDelay: '0.5s' }}
-              accept="image/*"
               onChange={handleInputChange}
+              accept="image/*"
+              className="file-input"
+              style={{ color: '#2d3748' }}
             />
           </div>
 
-          <button type="submit" disabled={loading} className="register-button btn-primary">
-            {loading ? 'Registering...' : 'Register'}
+          <button
+            type="submit"
+            className="register-button"
+            disabled={loading}
+          >
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
-        {/* Feedback Messages */}
-        {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
-        {success && <p className="success-message" style={{ color: 'green' }}>Registration successful!</p>}
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">Account created successfully!</p>}
       </div>
     </div>
   );
-});
+};
 
 export default RegisterPage;

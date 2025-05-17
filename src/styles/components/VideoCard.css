@@ -1,0 +1,251 @@
+.video-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-2px);
+}
+
+.thumbnail-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    /* 16:9 aspect ratio */
+    background: #000;
+    overflow: hidden;
+}
+
+.video-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.ad-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+.ad-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.ad-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.video-card:hover .video-overlay {
+    opacity: 1;
+}
+
+.video-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.controls-left,
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.volume-control {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.mute-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.volume-slider-container {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px;
+    border-radius: 4px;
+    display: none;
+}
+
+.volume-slider-container.show {
+    display: block;
+}
+
+.volume-slider {
+    width: 80px;
+    height: 4px;
+}
+
+.video-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 2px;
+    position: relative;
+}
+
+.progress-handle {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.video-badges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 4px;
+}
+
+.badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge.tech {
+    background-color: #007bff;
+    color: white;
+}
+
+.badge.hd {
+    background-color: #28a745;
+    color: white;
+}
+
+.video-info {
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+.channel-avatar img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.video-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.video-title {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.channel-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    text-decoration: none;
+    margin-bottom: 2px;
+}
+
+.verified-badge {
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.video-meta {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.meta-separator {
+    margin: 0 4px;
+}

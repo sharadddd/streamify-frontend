@@ -1,0 +1,344 @@
+.search-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.search-form {
+    position: relative;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px var(--primary-100);
+    background: var(--bg-primary);
+}
+
+.clear-search {
+    position: absolute;
+    right: 3rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.clear-search:hover {
+    color: var(--text-primary);
+}
+
+.search-button {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+    background: var(--bg-tertiary);
+}
+
+/* Filters */
+.filter-toggle {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.filter-toggle:hover {
+    background: var(--bg-secondary);
+    border-color: var(--primary-400);
+}
+
+.filter-toggle.active {
+    background: var(--primary-500);
+    border-color: var(--primary-500);
+    color: white;
+}
+
+.filters-panel {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.category-pill {
+    padding: 0.375rem 0.75rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-pill:hover {
+    background: var(--bg-quaternary);
+    border-color: var(--primary-400);
+}
+
+.category-pill.active {
+    background: var(--primary-500);
+    border-color: var(--primary-500);
+    color: white;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+.clear-filters {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-filters:hover {
+    background: var(--bg-quaternary);
+    color: var(--text-primary);
+}
+
+/* Suggestions */
+.suggestions-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.suggestion-item {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: var(--bg-secondary);
+}
+
+.suggestion-item:first-child {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.suggestion-item:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Recent Searches */
+.recent-searches {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.recent-searches h4 {
+    margin: 0 0 0.75rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.recent-search-item {
+    width: 100%;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 6px;
+}
+
+.recent-search-item:hover {
+    background: var(--bg-tertiary);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .search-input {
+        background: var(--bg-secondary-dark);
+        border-color: var(--border-color-dark);
+    }
+
+    .search-input:focus {
+        background: var(--bg-primary-dark);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .filters-panel,
+    .suggestions-panel,
+    .recent-searches {
+        background: var(--bg-secondary-dark);
+        border-color: var(--border-color-dark);
+    }
+
+    .category-pill {
+        background: var(--bg-tertiary-dark);
+        border-color: var(--border-color-dark);
+    }
+
+    .category-pill:hover {
+        background: var(--bg-quaternary-dark);
+    }
+
+    .filter-group select {
+        background: var(--bg-primary-dark);
+        border-color: var(--border-color-dark);
+    }
+
+    .clear-filters {
+        background: var(--bg-tertiary-dark);
+        border-color: var(--border-color-dark);
+    }
+
+    .clear-filters:hover {
+        background: var(--bg-quaternary-dark);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-container {
+        padding: 0.5rem;
+    }
+
+    .search-input {
+        font-size: 0.875rem;
+        padding: 0.625rem 2.5rem 0.625rem 0.75rem;
+    }
+
+    .category-pills {
+        gap: 0.375rem;
+    }
+
+    .category-pill {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .filter-group select {
+        padding: 0.375rem;
+    }
+}

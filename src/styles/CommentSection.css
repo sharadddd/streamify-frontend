@@ -1,63 +1,420 @@
 /* CommentSection.css */
 
 .comment-section {
-    @apply mt-8 p-4 bg-gray-900 rounded-lg shadow-lg;
+    margin-top: 24px;
+    padding: 24px;
+    background: white;
+    border-radius: 12px;
 }
 
-.comment-section h3 {
-    @apply text-xl font-bold mb-4 text-white;
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.comment-count {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.sort-options {
+    position: relative;
+}
+
+.sort-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #f0f2f5;
+    border: none;
+    border-radius: 20px;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sort-button:hover {
+    background: #e4e6eb;
+}
+
+.sort-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.sort-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    min-width: 180px;
+    z-index: 10;
+    transform-origin: top right;
+    transform: scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.sort-dropdown.active {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sort-option {
+    padding: 8px 16px;
+    color: #1a1a1a;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-option:hover {
+    background: #f0f2f5;
+}
+
+.sort-option.active {
+    color: #4a90e2;
+    background: #f0f7ff;
 }
 
 .comment-form {
-    @apply mb-6;
+    margin-bottom: 24px;
 }
 
-.comment-textarea {
-    @apply w-full p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y;
-    /* Ensure consistency with form styles */
-    min-height: 80px;
+.comment-input-wrapper {
+    display: flex;
+    gap: 12px;
 }
 
-.add-comment-button {
-    @apply btn-primary mt-2; /* Use consistent primary button styles */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-.comments-list {
-    @apply mt-6;
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.comment-items {
-    @apply list-none p-0 m-0 space-y-4;
+.comment-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+    resize: none;
+    min-height: 40px;
+    max-height: 120px;
+    transition: all 0.2s ease;
 }
 
-.comment-item {
-    @apply bg-gray-800 rounded-lg p-4 shadow-md;
-}
-
-.comment-author {
-    @apply flex items-center mb-2;
-}
-
-.author-name {
-    @apply font-semibold text-blue-400 text-sm;
-}
-
-.comment-content {
-    @apply text-gray-300 text-sm mb-2;
+.comment-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
 .comment-actions {
-    @apply flex items-center space-x-3 text-xs text-gray-400;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 12px;
+    padding-left: 52px;
 }
 
-.comment-actions button {
-    @apply text-gray-400 hover:text-white transition duration-200;
+.comment-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.comment-actions button:hover {
-    @apply underline;
+.cancel-button {
+    background: #f0f2f5;
+    color: #1a1a1a;
 }
 
-.comment-actions .like-count {
-    @apply font-semibold;
+.cancel-button:hover {
+    background: #e4e6eb;
+}
+
+.submit-button {
+    background: #4a90e2;
+    color: white;
+}
+
+.submit-button:hover {
+    background: #357abd;
+}
+
+.submit-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.comment {
+    display: flex;
+    gap: 12px;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.comment-time {
+    font-size: 12px;
+    color: #666;
+}
+
+.comment-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.comment-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.reaction-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    border-radius: 16px;
+    color: #666;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reaction-button:hover {
+    background: #f0f2f5;
+    color: #1a1a1a;
+}
+
+.reaction-button.active {
+    color: #4a90e2;
+    background: #f0f7ff;
+}
+
+.reactions-list {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.reaction-badge {
+    padding: 4px 8px;
+    background: #f0f2f5;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nested-comments {
+    margin-left: 52px;
+    margin-top: 16px;
+    padding-left: 16px;
+    border-left: 2px solid #f0f2f5;
+}
+
+.load-more {
+    padding: 12px;
+    text-align: center;
+}
+
+.load-more-button {
+    background: none;
+    border: none;
+    color: #4a90e2;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.load-more-button:hover {
+    color: #357abd;
+}
+
+.error-message {
+    padding: 12px;
+    background: #fee2e2;
+    border-radius: 8px;
+    color: #b91c1c;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    .comment-section {
+        background: #242424;
+    }
+
+    .comment-count {
+        color: #fff;
+    }
+
+    .sort-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .sort-button:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .sort-dropdown {
+        background: #2a2a2a;
+    }
+
+    .sort-option {
+        color: #fff;
+    }
+
+    .sort-option:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .sort-option.active {
+        color: #4a90e2;
+        background: rgba(74, 144, 226, 0.2);
+    }
+
+    .comment-input {
+        background: #2a2a2a;
+        border-color: #404040;
+        color: #fff;
+    }
+
+    .comment-input:focus {
+        border-color: #4a90e2;
+    }
+
+    .cancel-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .cancel-button:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .comment-author {
+        color: #fff;
+    }
+
+    .comment-text {
+        color: #fff;
+    }
+
+    .reaction-button {
+        color: #999;
+    }
+
+    .reaction-button:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+    .reaction-badge {
+        background: rgba(255, 255, 255, 0.1);
+        color: #999;
+    }
+
+    .nested-comments {
+        border-left-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+    .comment-section {
+        padding: 16px;
+    }
+
+    .comment-header {
+        margin-bottom: 16px;
+    }
+
+    .comment-count {
+        font-size: 16px;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .comment-input {
+        padding: 8px 12px;
+    }
+
+    .comment-actions {
+        padding-left: 44px;
+    }
+
+    .nested-comments {
+        margin-left: 44px;
+        padding-left: 12px;
+    }
+
+    .comment-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
 }
